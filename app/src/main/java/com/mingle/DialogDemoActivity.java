@@ -17,9 +17,9 @@ public class DialogDemoActivity extends AppCompatActivity {
         shapeLoadingDialog = new ShapeLoadingDialog.Builder(this)
                 .loadText("加载中...")
                 .delayMS(2333)
-                .distanceDP(66)
+                .distanceDP(28)
                 .loadTextSizeSP(18)
-                .acceleration(2.3f)
+                .acceleration(1.3f)
                 .loadTextColorID(getResources().getColor(R.color.colorText))
                 .build();
         findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
