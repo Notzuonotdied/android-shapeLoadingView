@@ -3,17 +3,17 @@ package com.mingle.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.mingle.shapeloading.R;
 
 /**
- * Created by zzz40500 on 15/6/15.
+ * @author zzz40500
+ * @date 15/6/15
+ * @describe TODO
  */
-public class ShapeLoadingDialog extends Dialog{
+public class ShapeLoadingDialog extends Dialog {
 
     private LoadingView mLoadingView;
 
@@ -31,10 +31,16 @@ public class ShapeLoadingDialog extends Dialog{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_dialog);
 
-        mLoadingView = (LoadingView) findViewById(R.id.loadView);
+        mLoadingView = findViewById(R.id.loadView);
 
-        mLoadingView.setDelay(mBuilder.mDelay);
+        // 设置属性
+        mLoadingView.setDelayMS(mBuilder.mDelay);
+        mLoadingView.setDurationMS(mBuilder.mDuration);
         mLoadingView.setLoadingText(mBuilder.mLoadText);
+        mLoadingView.setJumpDistanceDP(mBuilder.mDistance);
+        mLoadingView.setAcceleration(mBuilder.mAcceleration);
+        mLoadingView.setLoadTextSizeSP(mBuilder.mLoadTextSize);
+        mLoadingView.setLoadTextColorID(mBuilder.mLoadTextColor);
 
         setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -54,13 +60,40 @@ public class ShapeLoadingDialog extends Dialog{
         return mBuilder;
     }
 
-    public static class Builder{
+    /**
+     * 使用建造者模式来构建Dialog
+     */
+    public static class Builder {
 
         private Context mContext;
-
+        /**
+         * 暂停时间，默认暂停时间为80ms
+         */
         private int mDelay = 80;
-
+        /**
+         * 加载信息
+         */
         private CharSequence mLoadText;
+        /**
+         * 加载信息字体颜色
+         */
+        private int mLoadTextColor = 0xFF577FA1;
+        /**
+         * 加载信息字体大小,单位SP，默认为16sp
+         */
+        private int mLoadTextSize = 16;
+        /**
+         * 设置跳动的距离，默认最小的distance为33dp
+         */
+        private int mDistance = 0;
+        /**
+         * 设置弹跳的加速度
+         */
+        private float mAcceleration;
+        /**
+         * 设置动画的持续时间，最小为383ms
+         */
+        private int mDuration;
 
         private boolean mCancelable = true;
 
@@ -70,7 +103,7 @@ public class ShapeLoadingDialog extends Dialog{
             mContext = context;
         }
 
-        public Builder delay(int delay) {
+        public Builder delayMS(int delay) {
             mDelay = delay;
             return this;
         }
@@ -85,6 +118,31 @@ public class ShapeLoadingDialog extends Dialog{
             return this;
         }
 
+        public Builder loadTextColorID(int colorId) {
+            mLoadTextColor = colorId;
+            return this;
+        }
+
+        public Builder loadTextSizeSP(int spSize) {
+            mLoadTextSize = spSize;
+            return this;
+        }
+
+        public Builder distanceDP(int distance) {
+            mDistance = distance;
+            return this;
+        }
+
+        public Builder acceleration(float acceleration) {
+            mAcceleration = acceleration;
+            return this;
+        }
+
+        public Builder duration(int duration) {
+            mDuration = duration;
+            return this;
+        }
+
         public Builder cancelable(boolean cancelable) {
             mCancelable = cancelable;
             mCanceledOnTouchOutside = cancelable;
@@ -96,11 +154,11 @@ public class ShapeLoadingDialog extends Dialog{
             return this;
         }
 
-        public ShapeLoadingDialog build(){
+        public ShapeLoadingDialog build() {
             return new ShapeLoadingDialog(this);
         }
 
-        public ShapeLoadingDialog show(){
+        public ShapeLoadingDialog show() {
             ShapeLoadingDialog dialog = build();
             dialog.show();
             return dialog;

@@ -1,14 +1,12 @@
 package com.mingle;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.mingle.widget.ShapeLoadingDialog;
 
-public class DialogDemoActivity extends ActionBarActivity {
+public class DialogDemoActivity extends AppCompatActivity {
 
     private ShapeLoadingDialog shapeLoadingDialog;
 
@@ -18,9 +16,12 @@ public class DialogDemoActivity extends ActionBarActivity {
         setContentView(R.layout.activity_dialog_demo);
         shapeLoadingDialog = new ShapeLoadingDialog.Builder(this)
                 .loadText("加载中...")
+                .delayMS(2333)
+                .distanceDP(66)
+                .loadTextSizeSP(18)
+                .acceleration(2.3f)
+                .loadTextColorID(getResources().getColor(R.color.colorText))
                 .build();
-
-
         findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,27 +29,5 @@ public class DialogDemoActivity extends ActionBarActivity {
                 shapeLoadingDialog.show();
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_dialog_demo, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
